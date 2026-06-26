@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClarityVoice — Speak naturally. Sound professional.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#F6F2EA;            /* warm off-white */
+      --bg-tint:#EFE7D9;       /* soft warm highlight */
+      --ink:#1C1B18;           /* near-black */
+      --ink-soft:#56524A;      /* warm gray body */
+      --muted:#9A938663;       /* faint */
+      --muted-text:#8C857A;
+      --line:#E5DFD3;          /* hairline borders */
+      --card:#FFFFFF;
+      --accent:#C76B3F;        /* burnt orange */
+      --accent-soft:#F3E6DA;   /* orange tint bg */
+      --olive:#7C7A5A;
+      --radius:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',system-ui,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 500px at 80% -10%, var(--bg-tint), transparent 60%),
+        var(--bg);
+      background-attachment:fixed;
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap{max-width:840px;margin:0 auto;padding:0 24px}
+
+    /* nav */
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0 0;animation:rise .6s both}
+    .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk';font-weight:700;font-size:1.15rem;letter-spacing:-.01em}
+    .mark{width:26px;height:26px;border-radius:7px;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:13px}
+    .nav-btn{font-family:'Inter';font-weight:500;font-size:.9rem;color:var(--ink);background:transparent;border:1px solid var(--line);padding:9px 16px;border-radius:999px;cursor:pointer;transition:.2s}
+    .nav-btn:hover{background:#fff;border-color:#d8d1c4}
+
+    /* hero */
+    .hero{padding:64px 0 40px;animation:rise .7s .05s both}
+    .hero h1{font-family:'Space Grotesk';font-weight:700;font-size:clamp(2.4rem,6vw,4rem);line-height:1.02;letter-spacing:-.03em;max-width:14ch}
+    .hero .lead{margin-top:22px;font-size:1.12rem;color:var(--ink-soft);max-width:54ch}
+    .hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+    .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+    /* settings */
+    .settings{display:none;margin:0 0 28px;padding:22px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}
+    .settings.open{display:block;animation:rise .35s both}
+    .settings label{font-weight:600;font-size:.85rem;display:block;margin-bottom:10px}
+    .keyrow{display:flex;gap:10px;flex-wrap:wrap}
+    .hint{font-size:.82rem;color:var(--muted-text);margin-top:10px}
+    .hint a{color:var(--accent);text-decoration:none}
+    input[type=password],input[type=text]{flex:1;min-width:220px;font-family:'Inter';font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+    input::placeholder{color:#b3ab9d}
+
+    /* panel */
+    .panel{padding-bottom:80px}
+    .badge{display:inline-flex;align-items:center;gap:7px;font-size:.8rem;font-weight:600;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;margin-bottom:26px}
+    .badge .led{width:8px;height:8px;border-radius:50%;background:#c9c2b4}
+    .badge.on .led{background:#5f8a3f}
+
+    .tabs{display:inline-flex;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px;margin-bottom:22px}
+    .tab{font-weight:600;font-size:.92rem;padding:9px 20px;border-radius:999px;cursor:pointer;color:var(--muted-text);transition:.2s;border:none;background:transparent}
+    .tab.active{background:var(--ink);color:var(--bg)}
+
+    .mode{display:none}.mode.active{display:block;animation:rise .3s both}
+    textarea{width:100%;min-height:120px;font-family:'Inter';font-size:1.1rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;resize:vertical;line-height:1.5}
+    textarea:focus{outline:none;border-color:var(--accent)}
+    textarea::placeholder{color:#b3ab9d}
+
+    .controls{margin:18px 0 8px}
+    .btn{font-family:'Inter';font-weight:600;font-size:1rem;padding:15px 30px;border-radius:999px;border:none;cursor:pointer;transition:transform .12s,box-shadow .2s,background .2s;background:var(--ink);color:var(--bg)}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(28,27,24,.18)}
+    .btn:active{transform:scale(.98)}
+    .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+    .btn.rec.recording{background:var(--accent)}
+    .btn.rec.recording::after{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;margin-left:10px;animation:blink 1s infinite;vertical-align:middle}
+    @keyframes blink{50%{opacity:.2}}
+
+    .options{display:flex;gap:26px;flex-wrap:wrap;margin:34px 0 8px}
+    .opt{display:flex;flex-direction:column;gap:8px}
+    .opt .lbl{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-text)}
+    select{font-family:'Inter';font-size:.95rem;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 14px;min-width:160px;cursor:pointer}
+    select:focus{outline:none;border-color:var(--accent)}
+    .opt.hl select{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+    .row{display:flex;gap:8px;align-items:center}
+    .icon-btn{font-family:'Inter';font-weight:600;font-size:.9rem;padding:10px 13px;border-radius:12px;border:1px solid var(--line);background:#fff;cursor:pointer;transition:.2s}
+    .icon-btn:hover:not(:disabled){background:var(--bg)}
+    .icon-btn:disabled{opacity:.4;cursor:not-allowed}
+
+    .status{margin:30px 0 18px;font-size:.92rem;color:var(--muted-text);min-height:22px}
+
+    .result{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+    .result .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .result .tag{display:flex;align-items:center;gap:9px;font-size:.74rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-text)}
+    .result .tag i{width:7px;height:7px;border-radius:50%;background:var(--accent);font-style:normal}
+    .result.original .tag i{background:var(--olive)}
+    .text{font-size:1.18rem;color:var(--ink);min-height:28px;line-height:1.5}
+    .text.muted{color:#b3ab9d}
+    .text.show{animation:pop .35s both}
+
+    .shimmer{display:block;height:22px;border-radius:7px;background:linear-gradient(90deg,#efe9dd 25%,#e3dccd 50%,#efe9dd 75%);background-size:200% 100%;animation:sh 1.1s infinite}
+    @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+    .note{font-size:.82rem;color:var(--muted-text);margin:8px 0 0}
+    .note strong{color:var(--ink)}
+    footer{margin-top:30px;padding-top:24px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted-text);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    footer a{color:var(--accent);text-decoration:none}
+
+    @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+    @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav">
+      <div class="brand"><span class="mark">C</span> ClarityVoice</div>
+      <button class="nav-btn" id="gearBtn">Settings</button>
+    </nav>
+
+    <header class="hero">
+      <span class="eyebrow"><span class="dot"></span> Real-time communication aid</span>
+      <h1>Speak naturally. Sound professional.</h1>
+      <p class="lead">ClarityVoice rewrites your words as you speak or type — correcting grammar, refining tone, and translating across languages, while keeping your meaning and intent intact.</p>
+    </header>
+
+    <section class="panel">
+      <div class="settings" id="settings">
+        <label for="apiKey">Google Gemini API key (free)</label>
+        <div class="keyrow">
+          <input type="password" id="apiKey" placeholder="Paste your key — it stays in this browser only" />
+          <button class="btn" id="saveKey" style="padding:12px 22px">Save</button>
+        </div>
+        <p class="hint">Get a free key at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a>. Stored locally in your browser, never in the code.</p>
+      </div>
+
+      <span class="badge" id="aiBadge"><span class="led"></span> Smart AI: off</span>
+
+      <div>
+        <div class="tabs">
+          <button class="tab active" data-mode="speak">Speak</button>
+          <button class="tab" data-mode="type">Type</button>
+        </div>
+      </div>
+
+      <div class="mode active" id="mode-speak">
+        <div class="controls"><button class="btn rec" id="recordBtn">Start speaking</button></div>
+      </div>
+      <div class="mode" id="mode-type">
+        <textarea id="textInput" placeholder="Type a sentence — e.g. Hello sir I send report tomorrow"></textarea>
+        <div class="controls"><button class="btn" id="improveBtn">Improve</button></div>
+      </div>
+
+      <div class="options">
+        <div class="opt"><span class="lbl">Tone</span>
+          <select id="toneSelect">
+            <option value="professional">Professional</option>
+            <option value="friendly">Friendly &amp; warm</option>
+            <option value="concise">Short &amp; concise</option>
+            <option value="confident">Confident</option>
+          </select>
+        </div>
+        <div class="opt" id="langOpt"><span class="lbl">Translate to</span>
+          <select id="langSelect">
+            <option value="">No translation</option>
+            <option value="Hindi">Hindi</option><option value="Spanish">Spanish</option>
+            <option value="French">French</option><option value="German">German</option>
+            <option value="Arabic">Arabic</option><option value="Japanese">Japanese</option>
+            <option value="Mandarin Chinese">Chinese</option>
+          </select>
+        </div>
+        <div class="opt"><span class="lbl">Output voice</span>
+          <div class="row">
+            <select id="voiceSelect"></select>
+            <button class="icon-btn" id="previewVoice" type="button" title="Hear a sample">▶</button>
+          </div>
+        </div>
+      </div>
+      <p class="note">For the most natural free voices, open this in <strong>Microsoft Edge</strong> — it includes “Natural” neural voices.</p>
+
+      <p class="status" id="status">Choose Speak or Type to begin.</p>
+
+      <div class="result original">
+        <div class="head"><span class="tag"><i></i> Original</span></div>
+        <div class="text muted" id="original">Your words will appear here.</div>
+      </div>
+      <div class="result">
+        <div class="head"><span class="tag"><i></i> Improved</span><button class="icon-btn" id="playImproved" disabled>Hear</button></div>
+        <div class="text muted" id="improved">The polished version will appear here.</div>
+      </div>
+      <div class="result" id="translationCard">
+        <div class="head"><span class="tag"><i></i> <span id="langLabel">Translation</span></span><button class="icon-btn" id="playTranslation" disabled>Hear</button></div>
+        <div class="text" id="translation"></div>
+      </div>
+
+      <footer>
+        <span>ClarityVoice — built by Faiz Ahmed</span>
+        <a href="https://github.com/faizcodesgo" target="_blank">github.com/faizcodesgo</a>
+      </footer>
+    </section>
+  </div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const recordBtn=$('recordBtn'), improveBtn=$('improveBtn'), statusEl=$('status');
+    const originalEl=$('original'), improvedEl=$('improved'), translationEl=$('translation');
+    const translationCard=$('translationCard'), langLabel=$('langLabel'), langOpt=$('langOpt');
+    const textInput=$('textInput'), voiceSelect=$('voiceSelect');
+    const toneSelect=$('toneSelect'), langSelect=$('langSelect');
+    const playImproved=$('playImproved'), playTranslation=$('playTranslation');
+    const settings=$('settings'), gearBtn=$('gearBtn'), apiKeyInput=$('apiKey'), saveKey=$('saveKey'), aiBadge=$('aiBadge');
+
+    let improvedText='', translatedText='';
+    const GEMINI_MODELS = ['gemini-2.0-flash','gemini-2.5-flash','gemini-flash-latest','gemini-1.5-flash'];
+
+    let geminiKey = localStorage.getItem('geminiKey') || '';
+    if (geminiKey) apiKeyInput.value = geminiKey;
+    function updateBadge(){
+      if(geminiKey){ aiBadge.classList.add('on'); aiBadge.querySelector('.led')&&(aiBadge.innerHTML='<span class="led"></span> Smart AI: on'); }
+      else { aiBadge.classList.remove('on'); aiBadge.innerHTML='<span class="led"></span> Smart AI: off'; }
+    }
+    updateBadge();
+    gearBtn.onclick = () => settings.classList.toggle('open');
+    saveKey.onclick = () => {
+      geminiKey = apiKeyInput.value.trim();
+      localStorage.setItem('geminiKey', geminiKey);
+      updateBadge();
+      statusEl.textContent = geminiKey ? 'Key saved. Type a sentence and click Improve.' : 'Key cleared — smart AI is off.';
+      settings.classList.remove('open');
+    };
+
+    document.querySelectorAll('.tab').forEach(tab => tab.onclick = () => {
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.mode').forEach(m=>m.classList.remove('active'));
+      tab.classList.add('active'); $('mode-'+tab.dataset.mode).classList.add('active');
+      statusEl.textContent = tab.dataset.mode==='speak' ? 'Click “Start speaking” and allow the microphone.' : 'Type a sentence and click “Improve”.';
+    });
+    langSelect.onchange = () => langOpt.classList.toggle('hl', !!langSelect.value);
+
+    let voices=[]; const isPremium = n => /natural|neural|online/i.test(n);
+    function loadVoices(){
+      const all = speechSynthesis.getVoices().filter(v=>v.lang.startsWith('en'));
+      voices = all.sort((a,b)=>{ const s=v=>isPremium(v.name)?3:/google/i.test(v.name)?2:/aria|jenny|guy/i.test(v.name)?1:0; return s(b)-s(a); });
+      voiceSelect.innerHTML=''; voices.forEach((v,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=v.name+(isPremium(v.name)?' ★':''); voiceSelect.appendChild(o); });
+      voiceSelect.value=0;
+    }
+    speechSynthesis.onvoiceschanged=loadVoices; loadVoices();
+    $('previewVoice').onclick=()=>speak('Hello, this is how I will sound. Clear and professional.');
+
+    const SR = window.SpeechRecognition||window.webkitSpeechRecognition;
+    let recognition=null, isRec=false;
+    if(!SR){ recordBtn.disabled=true; recordBtn.textContent='Use Chrome or Edge'; }
+    else {
+      recognition=new SR(); recognition.lang='en-US'; recognition.interimResults=false;
+      recognition.onresult=async e=>{ const t=e.results[0][0].transcript; showOriginal(t); await processText(t); };
+      recognition.onerror=e=>{
+        if(e.error==='network') statusEl.textContent='Microphone needs a real web address — use the Type tab, or open the deployed link.';
+        else if(e.error==='not-allowed') statusEl.textContent='Microphone blocked — allow it from the lock icon in the address bar.';
+        else statusEl.textContent='Error: '+e.error+' — try again.';
+        stopRec();
+      };
+      recognition.onend=stopRec;
+    }
+    recordBtn.onclick=()=>{ if(isRec){recognition.stop();return;} resetOut(); isRec=true; recordBtn.classList.add('recording'); recordBtn.textContent='Stop'; statusEl.textContent='Listening…'; recognition.start(); };
+    function stopRec(){ isRec=false; recordBtn.classList.remove('recording'); recordBtn.textContent='Start speaking'; }
+
+    improveBtn.onclick=async()=>{ const t=textInput.value.trim(); if(!t){statusEl.textContent='Type something first.';return;} resetOut(); showOriginal(t); await processText(t); };
+
+    async function processText(text){
+      const lang = langSelect.value;
+      improvedEl.classList.remove('muted'); improvedEl.innerHTML='<span class="shimmer"></span>';
+      statusEl.textContent = lang ? 'Improving and translating…' : 'Improving…';
+      try {
+        if(geminiKey){ const r = await improveAndTranslate(text, lang); improvedText=r.improved; translatedText=r.translation||''; }
+        else { improvedText = await improveWithLanguageTool(text); translatedText=''; }
+      } catch(err){ statusEl.textContent=err.message; improvedText = await improveWithLanguageTool(text); translatedText=''; }
+
+      setBox(improvedEl, improvedText); playImproved.disabled=false;
+
+      if(lang){
+        if(!geminiKey){ statusEl.textContent='Translation needs the Gemini key (Settings).'; return; }
+        langLabel.textContent=lang; setBox(translationEl, translatedText||'(translation failed)');
+        translationCard.style.display='block'; playTranslation.disabled=!translatedText;
+        statusEl.textContent='Done — improved and translated.';
+      } else {
+        langLabel.textContent='Translation';
+        translationEl.innerHTML='<span style="color:#b3ab9d">Pick a language in “Translate to”, then Improve again.</span>';
+        translationCard.style.display='block'; playTranslation.disabled=true;
+        statusEl.textContent='Done.';
+      }
+    }
+
+    async function callGemini(prompt){
+      let lastErr='';
+      for(const model of GEMINI_MODELS){
+        const url=`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`;
+        try{
+          const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})});
+          if(!res.ok){ const e=await res.text(); lastErr='('+res.status+') '+e.slice(0,160); console.error('Gemini '+model+':',e);
+            if(res.status===400 && /API key not valid/i.test(e)) throw new Error('API key not valid — re-add it in Settings.'); continue; }
+          const data=await res.json(); return data.candidates[0].content.parts[0].text.trim();
+        }catch(err){ lastErr=err.message; console.error(err); }
+      }
+      throw new Error(lastErr || 'All Gemini models failed.');
+    }
+    async function improveAndTranslate(text, lang){
+      const tone=toneSelect.value;
+      if(!lang){
+        const p=`You are a communication assistant. Rewrite the sentence to be grammatically correct, clear, and ${tone} in tone, preserving the speaker's meaning and intent. Keep it natural, not stiff. Return ONLY the rewritten sentence.\n\nSentence: ${text}`;
+        return { improved: clean(await callGemini(p)) };
+      }
+      const p=`You are a communication assistant. (1) Rewrite the sentence to be grammatically correct, clear, and ${tone} in tone, preserving meaning. (2) Translate that improved sentence into ${lang}. Return ONLY valid JSON, no markdown fences, exactly: {"improved":"<english>","translation":"<${lang}>"}\n\nSentence: ${text}`;
+      const raw = await callGemini(p);
+      try { const j = JSON.parse(raw.replace(/```json|```/g,'').trim()); return { improved:clean(j.improved), translation:j.translation }; }
+      catch(e){ return { improved: clean(raw) }; }
+    }
+    function clean(s){ return (s||'').replace(/^["']|["']$/g,'').trim(); }
+
+    async function improveWithLanguageTool(text){
+      try{ const r=await fetch('https://api.languagetool.org/v2/check',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({text,language:'en-US'})}); const d=await r.json(); return applyCorr(text,d.matches); }
+      catch(e){ return cap(text); }
+    }
+    function applyCorr(text,m){ if(!m||!m.length)return cap(text); const s=[...m].sort((a,b)=>b.offset-a.offset); let r=text; for(const x of s){ if(x.replacements&&x.replacements.length) r=r.slice(0,x.offset)+x.replacements[0].value+r.slice(x.offset+x.length);} return cap(r); }
+    function cap(s){ s=(s||'').trim(); if(!s)return s; s=s[0].toUpperCase()+s.slice(1); if(!/[.!?]$/.test(s))s+='.'; return s; }
+
+    function speak(text){ const u=new SpeechSynthesisUtterance(text); const v=voices[voiceSelect.value]; if(v)u.voice=v; u.rate=0.98; u.pitch=1.0; speechSynthesis.cancel(); speechSynthesis.speak(u); }
+    playImproved.onclick=()=>improvedText&&speak(improvedText);
+    playTranslation.onclick=()=>translatedText&&speak(translatedText);
+
+    function showOriginal(t){ setBox(originalEl,t); }
+    function setBox(el,t){ el.classList.remove('muted'); el.textContent=t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+    function resetOut(){ improvedEl.textContent='The polished version will appear here.'; improvedEl.classList.add('muted'); playImproved.disabled=true; translationCard.style.display='none'; playTranslation.disabled=true; }
+  </script>
+</body>
+</html>
