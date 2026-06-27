@@ -79,7 +79,8 @@ It's a single-page app with **no backend** — it calls the AI directly from the
 
 - [`ARCHITECTURE.md`](ARCHITECTURE.md) — design decisions & trade-offs (ADR)
 - [`RESEARCH.md`](RESEARCH.md) — fact-checked research on the tech stack, latency, and privacy/legal
-- [`voice-clone-colab.ipynb`](voice-clone-colab.ipynb) — free voice-cloning notebook (XTTS-v2 on Google Colab)
+- [`voice-clone-chatterbox.ipynb`](voice-clone-chatterbox.ipynb) — **voice cloning with emotion + pacing** (Chatterbox, free Colab) ⭐ primary
+- [`voice-clone-colab.ipynb`](voice-clone-colab.ipynb) — older voice-cloning notebook (XTTS-v2) — fallback for languages Chatterbox lacks
 
 ---
 
